@@ -10,4 +10,5 @@ public interface ClientDAO {
     void update(Client client);
     void delete(Long id);
     Client findByEmail(String email);
+	Client findByEmailOrPhone(String emailOrPhone);
 }

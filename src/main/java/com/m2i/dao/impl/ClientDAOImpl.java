@@ -8,6 +8,10 @@ import com.m2i.entity.Client;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 @ApplicationScoped
 public class ClientDAOImpl implements ClientDAO {
@@ -47,6 +51,22 @@ public class ClientDAOImpl implements ClientDAO {
     public Client findByEmail(String email) {
         return em.createQuery("SELECT c FROM Client c WHERE c.email = :email", Client.class)
                  .setParameter("email", email)
+                 .getResultStream()
+                 .findFirst()
+                 .orElse(null);
+    }
+    
+    @Override
+    public Client findByEmailOrPhone(String emailOrPhone) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Client> cq = cb.createQuery(Client.class);
+        Root<Client> client = cq.from(Client.class);
+
+        Predicate emailPredicate = cb.equal(client.get("email"), emailOrPhone);
+        Predicate phonePredicate = cb.equal(client.get("telephone"), emailOrPhone);
+        cq.select(client).where(cb.or(emailPredicate, phonePredicate));
+
+        return em.createQuery(cq)
                  .getResultStream()
                  .findFirst()
                  .orElse(null);
