@@ -7,6 +7,7 @@
     <h1>Bienvenue sur M2iBank</h1>
     <ul>
         <li><a href="clients">Liste des clients</a></li>
+        <li><a href="clientList.xhtml">Liste des clients (JSF)</a></li>
         <li><a href="accounts">Liste des comptes</a></li>
         <li><a href="transactions">Liste des transactions</a></li>
     </ul>

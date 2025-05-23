@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Liste des clients</title>
+</h:head>
+<h:body>
+
+<h:form>
+    <h:commandButton value="Déconnexion" action="#{loginBean.logout}" />
+</h:form>
+
+    <h:form>
+
+        <!-- Messages d'erreur -->
+        <h:messages globalOnly="true" layout="table" style="color:red;" />
+
+        <h2>Liste des clients</h2>
+
+        <h:dataTable value="#{clientBean.clients}" var="clientElt" border="1" cellpadding="5">
+
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{clientElt.clientId}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Nom</f:facet>
+                #{clientElt.nom}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Prénom</f:facet>
+                #{clientElt.prenom}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                #{clientElt.email}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Téléphone</f:facet>
+                #{clientElt.telephone}
+            </h:column>
+
+        </h:dataTable>
+
+        <br/>
+
+        <!-- Lien vers le formulaire de création -->
+        <h:commandLink value="Créer un nouveau client" action="clientForm.xhtml" />
+
+    </h:form>
+</h:body>
+</html>

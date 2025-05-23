@@ -13,8 +13,14 @@ import jakarta.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 @Stateless
 public class ClientServiceImpl implements ClientService {
+
+	private static final Logger logger = LogManager.getLogger(ClientServiceImpl.class);
 
     @Inject
     private ClientDAO clientDAO;
@@ -29,6 +35,7 @@ public class ClientServiceImpl implements ClientService {
     public void createClient(ClientCreateDTO dto) {
         Client client = clientCreateMapper.toEntity(dto);
         clientDAO.create(client);
+    	logger.info("Création d’un nouveau client id="+client.getClientId());
     }
 
     @Override
